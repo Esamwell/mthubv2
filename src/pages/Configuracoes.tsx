@@ -27,7 +27,7 @@ export const Configuracoes = () => {
 
   const handleUpdateProfile = async () => {
     setIsSaving(true);
-    const res = await fetch(`http://localhost:4000/editar-cliente/${profile?.id}`, {
+    const res = await fetch(`/api/editar-cliente/${profile?.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
