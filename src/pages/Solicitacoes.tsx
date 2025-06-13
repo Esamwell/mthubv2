@@ -90,7 +90,7 @@ export const Solicitacoes = () => {
   const handleDeleteClick = async (id: string) => {
     if (window.confirm('Tem certeza que deseja excluir esta solicitação?')) {
       try {
-        await axios.delete(`http://localhost:4000/api/solicitacoes/${id}`);
+        await axios.delete(`/api/solicitacoes/${id}`);
         toast({
           title: "Sucesso!",
           description: "Solicitação excluída com sucesso.",
@@ -108,6 +108,7 @@ export const Solicitacoes = () => {
   };
 
   const handleSaveSolicitacao = async () => {
+    setIsActionLoading(true);
     try {
       if (!newSolicitacao.titulo || !newSolicitacao.categoria_id || !newSolicitacao.cliente_id) {
         toast({
@@ -119,13 +120,13 @@ export const Solicitacoes = () => {
       }
 
       if (isEditing && editingSolicitacao) {
-        await axios.put(`http://localhost:4000/api/solicitacoes/${editingSolicitacao.id}`, newSolicitacao);
+        let res = await axios.put(`/api/solicitacoes/${editingSolicitacao.id}`, newSolicitacao);
         toast({
           title: "Sucesso!",
           description: "Solicitação atualizada com sucesso.",
         });
       } else {
-        await axios.post('http://localhost:4000/api/solicitacoes', newSolicitacao);
+        let res = await axios.post('/api/solicitacoes', newSolicitacao);
         toast({
           title: "Sucesso!",
           description: "Solicitação criada com sucesso.",

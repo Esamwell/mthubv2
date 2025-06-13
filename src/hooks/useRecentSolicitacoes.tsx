@@ -1,34 +1,24 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Solicitacao } from './useSolicitacoes'; // Reutiliza a interface Solicitacao
+import { useToast } from '@/hooks/use-toast'; // Corrigido o caminho do import
 
 export const useRecentSolicitacoes = () => {
-  const [recentSolicitacoes, setRecentSolicitacoes] = useState<Solicitacao[]>([]);
-  const [loadingRecent, setLoadingRecent] = useState<boolean>(true);
-  const [errorRecent, setErrorRecent] = useState<string | null>(null);
+  const { toast } = useToast();
 
-  const fetchRecentSolicitacoes = useCallback(async () => {
-    setLoadingRecent(true);
-    setErrorRecent(null);
-    try {
-      const response = await axios.get('http://localhost:4000/api/solicitacoes/recentes');
-      if (Array.isArray(response.data)) {
-        setRecentSolicitacoes(response.data as Solicitacao[]);
-      } else {
-        console.warn('Dados recebidos do backend para solicitações recentes não são um array:', response.data);
-        setRecentSolicitacoes([]);
+  const { data: recentSolicitacoes = [], isLoading: loadingRecent, error: errorRecent, refetch: fetchRecentSolicitacoes } = useQuery<Solicitacao[]>(
+    ['recentSolicitacoes'],
+    async () => {
+      console.log('useRecentSolicitacoes: Buscando solicitações recentes...');
+      try {
+        const response = await axios.get('/api/solicitacoes/recentes');
+        return response.data;
+      } catch (err) {
+        console.error('Erro ao buscar solicitações recentes:', err);
+        throw err;
       }
-    } catch (err) {
-      console.error('Erro ao buscar solicitações recentes:', err);
-      setErrorRecent('Falha ao carregar solicitações recentes.');
-    } finally {
-      setLoadingRecent(false);
     }
-  }, []);
-
-  useEffect(() => {
-    fetchRecentSolicitacoes();
-  }, [fetchRecentSolicitacoes]);
+  );
 
   return { recentSolicitacoes, loadingRecent, errorRecent, fetchRecentSolicitacoes };
 }; 

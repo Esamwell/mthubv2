@@ -1,5 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { useToast } from '@/hooks/use-toast';
+import type { Solicitacao } from './useSolicitacoes';
 
 // Reutiliza a interface Solicitacao do useSolicitacoes para consistência
 interface Solicitacao {
@@ -18,34 +20,30 @@ interface Solicitacao {
   updated_at: string;
 }
 
-export const useSolicitacao = (id: string | undefined) => {
-  const [solicitacao, setSolicitacao] = useState<Solicitacao | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+export const useSolicitacao = (id?: string) => {
+  const { toast } = useToast();
 
-  useEffect(() => {
-    const fetchSolicitacao = async () => {
-      if (!id) {
-        setLoading(false);
-        setError('ID da solicitação não fornecido.');
-        return;
-      }
-
-      setLoading(true);
-      setError(null);
+  const { data: solicitacao, isLoading, error, refetch } = useQuery<Solicitacao>(
+    ['solicitacao', id],
+    async () => {
+      if (!id) return undefined;
       try {
-        const response = await axios.get(`http://localhost:4000/api/solicitacoes/${id}`);
-        setSolicitacao(response.data as Solicitacao);
+        console.log(`useSolicitacao: Buscando solicitação com ID: ${id}`);
+        const response = await axios.get(`/api/solicitacoes/${id}`); // Corrigido para /api
+        console.log('useSolicitacao: Resposta da API:', response.data);
+        return response.data;
       } catch (err) {
         console.error(`Erro ao buscar solicitação ${id}:`, err);
-        setError('Falha ao carregar detalhes da solicitação.');
-      } finally {
-        setLoading(false);
+        toast({
+          title: 'Erro',
+          description: `Falha ao carregar solicitação ${id}.`,
+          variant: 'destructive',
+        });
+        throw err;
       }
-    };
+    },
+    { enabled: !!id } // Só executa a query se o ID estiver disponível
+  );
 
-    fetchSolicitacao();
-  }, [id]);
-
-  return { solicitacao, loading, error };
+  return { solicitacao, isLoading, error, refetch };
 }; 

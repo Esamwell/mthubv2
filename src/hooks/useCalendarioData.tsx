@@ -1,39 +1,33 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
-interface SolicitacaoCalendario {
+interface EventoCalendario {
   id: string;
   titulo: string;
-  data_prazo: string;
-  prioridade: string;
-  status: string;
-  cliente: { nome: string };
-  categoria: { nome: string };
+  start: string;
+  end: string;
+  prioridade: 'baixa' | 'media' | 'alta';
+  status: 'pendente' | 'em andamento' | 'concluido';
+  cliente_nome: string;
 }
 
 export const useCalendarioData = (month: number, year: number) => {
-  const [solicitacoes, setSolicitacoes] = useState<SolicitacaoCalendario[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchSolicitacoes = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await axios.get(`http://localhost:4000/api/solicitacoes-calendario?month=${month + 1}&year=${year}`); // Corrigido o número da porta para 4000
-      setSolicitacoes(response.data);
-    } catch (err) {
-      console.error('Erro ao buscar solicitações para o calendário:', err);
-      setError('Falha ao carregar solicitações para o calendário.');
-      setSolicitacoes([]); // Limpa os dados em caso de erro
-    } finally {
-      setLoading(false);
+  const { data: eventos = [], isLoading, error, refetch } = useQuery<EventoCalendario[]>(
+    {
+      queryKey: ['eventosCalendario', month, year],
+      queryFn: async () => {
+        console.log(`useCalendarioData: Buscando eventos para o mês ${month + 1} e ano ${year}...`);
+        try {
+          const response = await axios.get(`/api/solicitacoes-calendario?month=${month + 1}&year=${year}`); // Corrigido para /api
+          console.log('useCalendarioData: Resposta da API:', response.data);
+          return response.data;
+        } catch (err) {
+          console.error('Erro ao buscar eventos do calendário:', err);
+          throw err;
+        }
+      },
     }
-  }, [month, year]);
+  );
 
-  useEffect(() => {
-    fetchSolicitacoes();
-  }, [fetchSolicitacoes]);
-
-  return { solicitacoes, loading, error, fetchSolicitacoes };
+  return { eventos, isLoading, error, refetch };
 }; 

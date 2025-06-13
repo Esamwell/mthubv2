@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
 export interface Solicitacao {
@@ -18,34 +18,21 @@ export interface Solicitacao {
 }
 
 export const useSolicitacoes = () => {
-  const [solicitacoes, setSolicitacoes] = useState<Solicitacao[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchSolicitacoes = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await axios.get('http://localhost:4000/api/solicitacoes');
-      if (Array.isArray(response.data)) {
-        // O backend agora deve retornar os objetos aninhados para cliente e categoria
-        setSolicitacoes(response.data as Solicitacao[]);
-      } else {
-        console.warn('Dados recebidos do backend não são um array:', response.data);
-        setSolicitacoes([]); // Garante que é sempre um array
+  // Busca todas as solicitações usando react-query
+  const { data: solicitacoes = [], isLoading: loading, error, refetch: fetchSolicitacoes } = useQuery<Solicitacao[]>(
+    ['solicitacoes'],
+    async () => {
+      console.log('useSolicitacoes: Buscando solicitações...');
+      try {
+        const response = await axios.get('/api/solicitacoes');
+        console.log('useSolicitacoes: Resposta da API:', response.data);
+        return response.data;
+      } catch (err) {
+        console.error('Erro ao buscar solicitações:', err);
+        throw err;
       }
-    } catch (err) {
-      console.error('Erro ao buscar solicitações:', err);
-      setError('Falha ao carregar solicitações.');
-    } finally {
-      setLoading(false);
     }
-  }, []);
-
-  useEffect(() => {
-    console.log('useSolicitacoes: useEffect disparado, chamando fetchSolicitacoes');
-    fetchSolicitacoes();
-  }, [fetchSolicitacoes]);
+  );
 
   return { solicitacoes, loading, error, fetchSolicitacoes };
 }; 
