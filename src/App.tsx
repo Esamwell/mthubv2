@@ -17,7 +17,13 @@ import NotFound from "./pages/NotFound";
 import { Usuarios } from "./pages/Usuarios";
 import { Orcamento } from "./pages/Orcamento";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // Podemos adicionar configurações padrão aqui, se necessário
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
