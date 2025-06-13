@@ -15,7 +15,7 @@ const supabase = createClient(
 );
 
 // Cadastro de usuário
-app.post('/cadastrar-usuario', async (req, res) => {
+app.post('/api/cadastrar-usuario', async (req, res) => {
   const { nome, email, empresa, telefone, senha, user_type } = req.body;
 
   // Verifica se já existe usuário com esse email
@@ -53,7 +53,7 @@ app.post('/cadastrar-usuario', async (req, res) => {
 });
 
 // Login de cliente
-app.post('/login-cliente', async (req, res) => {
+app.post('/api/login-cliente', async (req, res) => {
   const { email, senha } = req.body;
   const { data: user, error } = await supabase
     .from('profiles')
@@ -73,7 +73,7 @@ app.post('/login-cliente', async (req, res) => {
 });
 
 // Deletar usuário
-app.delete('/deletar-usuario/:id', async (req, res) => {
+app.delete('/api/deletar-usuario/:id', async (req, res) => {
   const { id } = req.params;
   const { error } = await supabase.from('profiles').delete().eq('id', id);
   if (error) return res.status(400).json({ error: error.message });
@@ -81,7 +81,7 @@ app.delete('/deletar-usuario/:id', async (req, res) => {
 });
 
 // Editar usuário
-app.put('/editar-usuario/:id', async (req, res) => {
+app.put('/api/editar-usuario/:id', async (req, res) => {
   const { id } = req.params;
   const { nome, email, empresa, telefone, status, user_type } = req.body;
   const { data, error } = await supabase
@@ -95,7 +95,7 @@ app.put('/editar-usuario/:id', async (req, res) => {
 });
 
 // Alterar senha do usuário
-app.post('/alterar-senha', async (req, res) => {
+app.post('/api/alterar-senha', async (req, res) => {
   const { userId, senhaAtual, novaSenha } = req.body;
 
   console.log('Backend: Recebido pedido de alteração de senha para userId:', userId);
