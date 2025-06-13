@@ -68,6 +68,9 @@
     "vaul": "^0.9.3",
     "zod": "^3.23.8"
   },
+  "overrides": {
+    "@tanstack/react-query": "^5.56.2"
+  },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
     "@tailwindcss/typography": "^0.5.15",
