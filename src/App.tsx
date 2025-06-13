@@ -17,6 +17,7 @@ import NotFound from "./pages/NotFound";
 import { Usuarios } from "./pages/Usuarios";
 import { Orcamento } from "./pages/Orcamento";
 
+// Ajustado para forçar nova build no Vercel
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
