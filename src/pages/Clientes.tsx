@@ -9,6 +9,7 @@ import { Plus, Search, RefreshCw, Filter, Edit, Trash2 } from 'lucide-react';
 import { useClientes } from '@/hooks/useClientes';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
+import type { Tables } from '@/integrations/supabase/types';
 
 export const Clientes = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -32,7 +33,7 @@ export const Clientes = () => {
   const { toast } = useToast();
 
   const [editDialogOpen, setEditDialogOpen] = useState(false);
-  const [editData, setEditData] = useState<any>(null);
+  const [editData, setEditData] = useState<Tables<'profiles'> | null>(null);
   const [isActionLoading, setIsActionLoading] = useState(false);
 
   const handleDelete = async (id: string) => {
@@ -42,7 +43,7 @@ export const Clientes = () => {
     refetch();
   };
 
-  const handleEdit = (cliente: any) => {
+  const handleEdit = (cliente: Tables<'profiles'>) => {
     setEditData(cliente);
     setEditDialogOpen(true);
   };

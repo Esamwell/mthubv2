@@ -120,13 +120,13 @@ export const Solicitacoes = () => {
       }
 
       if (isEditing && editingSolicitacao) {
-        let res = await axios.put(`/api/solicitacoes/${editingSolicitacao.id}`, newSolicitacao);
+        const res = await axios.put(`/api/solicitacoes/${editingSolicitacao.id}`, newSolicitacao);
         toast({
           title: "Sucesso!",
           description: "Solicitação atualizada com sucesso.",
         });
       } else {
-        let res = await axios.post('/api/solicitacoes', newSolicitacao);
+        const res = await axios.post('/api/solicitacoes', newSolicitacao);
         toast({
           title: "Sucesso!",
           description: "Solicitação criada com sucesso.",

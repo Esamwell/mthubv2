@@ -13,8 +13,8 @@ interface Profile {
 interface AuthContextType {
   profile: Profile | null;
   loading: boolean;
-  login: (email: string, senha: string) => Promise<{ error: any } | undefined>;
-  cadastrar: (dados: { nome: string; email: string; senha: string; empresa?: string; telefone?: string; user_type?: 'admin' | 'cliente' }) => Promise<{ error: any } | undefined>;
+  login: (email: string, senha: string) => Promise<{ error: string } | undefined>;
+  cadastrar: (dados: { nome: string; email: string; senha: string; empresa?: string; telefone?: string; user_type?: 'admin' | 'cliente' }) => Promise<{ error: string } | undefined>;
   logout: () => void;
 }
 

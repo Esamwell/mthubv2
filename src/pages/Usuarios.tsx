@@ -10,6 +10,13 @@ import { useUsuarios } from '@/hooks/useUsuarios';
 import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 
+interface Usuario {
+  id: string;
+  nome: string;
+  email: string;
+  user_type: 'admin' | 'cliente';
+}
+
 export const Usuarios = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -25,7 +32,7 @@ export const Usuarios = () => {
   const { toast } = useToast();
 
   const [editDialogOpen, setEditDialogOpen] = useState(false);
-  const [editData, setEditData] = useState<any>(null);
+  const [editData, setEditData] = useState<Usuario | null>(null);
   const [isActionLoading, setIsActionLoading] = useState(false);
 
   const handleDelete = async (id: string) => {
@@ -35,7 +42,7 @@ export const Usuarios = () => {
     refetch();
   };
 
-  const handleEdit = (usuario: any) => {
+  const handleEdit = (usuario: Usuario) => {
     setEditData(usuario);
     setEditDialogOpen(true);
   };
@@ -43,13 +50,13 @@ export const Usuarios = () => {
   const handleEditSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsActionLoading(true);
-    await fetch(`/api/editar-usuario/${editData.id}`, {
+    await fetch(`/api/editar-usuario/${editData?.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        nome: editData.nome,
-        email: editData.email,
-        user_type: editData.user_type,
+        nome: editData?.nome,
+        email: editData?.email,
+        user_type: editData?.user_type,
       }),
     });
     setIsActionLoading(false);
