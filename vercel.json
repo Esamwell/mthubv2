@@ -1,7 +1,7 @@
 {
   "builds": [
     {
-      "src": "package.json",
+      "src": ".",
       "use": "@vercel/static-build",
       "config": {
         "buildCommand": "npm run build",
@@ -17,10 +17,6 @@
     {
       "src": "/api/(.*)",
       "dest": "api/server.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
     }
   ],
   "installCommand": "npm install && cd api && npm install"
