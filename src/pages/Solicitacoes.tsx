@@ -118,17 +118,18 @@ export const Solicitacoes = () => {
           description: "Título, Tipo e Cliente são campos obrigatórios.",
           variant: "destructive",
         });
+        setIsActionLoading(false);
         return;
       }
 
       if (isEditing && editingSolicitacao) {
-        const res = await axios.put(`/api/solicitacoes/${editingSolicitacao.id}`, newSolicitacao);
+        await axios.put(`/api/solicitacoes/${editingSolicitacao.id}`, newSolicitacao);
         toast({
           title: "Sucesso!",
           description: "Solicitação atualizada com sucesso.",
         });
       } else {
-        const res = await axios.post('/api/solicitacoes', newSolicitacao);
+        await axios.post('/api/solicitacoes', newSolicitacao);
         toast({
           title: "Sucesso!",
           description: "Solicitação criada com sucesso.",
@@ -153,6 +154,8 @@ export const Solicitacoes = () => {
         description: `Falha ao ${isEditing ? 'atualizar' : 'criar'} solicitação. Tente novamente.`,
         variant: "destructive",
       });
+    } finally {
+      setIsActionLoading(false);
     }
   };
 
@@ -441,11 +444,11 @@ export const Solicitacoes = () => {
                   filteredSolicitacoes.map((item) => (
                     <tr key={item.id} className="hover:bg-muted">
                       <TableCell className="py-3 px-6 text-foreground">{item.titulo}</TableCell>
-                      <TableCell className="py-3 px-6 text-foreground">{item.categoria_nome}</TableCell>
+                      <TableCell className="py-3 px-6 text-foreground">{item.categoria?.nome}</TableCell>
                       <TableCell className="py-3 px-6">
                         <Badge className={getPriorityColor(item.prioridade)}>{item.prioridade}</Badge>
                       </TableCell>
-                      <TableCell className="py-3 px-6 text-foreground">{item.cliente_nome}</TableCell>
+                      <TableCell className="py-3 px-6 text-foreground">{item.cliente?.nome}</TableCell>
                       <TableCell className="py-3 px-6">
                         <Badge className={getStatusColor(item.status)}>{item.status.replace(/_/g, ' ')}</Badge>
                       </TableCell>
