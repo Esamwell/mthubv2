@@ -10,6 +10,9 @@ export const Dashboard = () => {
   const { stats, isLoading, error } = useDashboardStats();
   const { recentSolicitacoes, loadingRecent, errorRecent } = useRecentSolicitacoes();
 
+  // Debug: logar as solicitações recentes
+  console.log('Solicitações Recentes:', recentSolicitacoes);
+
   const pieChartData = [
     { name: 'Pendentes', value: stats?.solicitacoesPendentes || 0, color: '#FFBF00' },
     { name: 'Em Andamento', value: stats?.solicitacoesEmAndamento || 0, color: '#3B82F6' },
