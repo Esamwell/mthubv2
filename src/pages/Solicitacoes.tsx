@@ -246,7 +246,7 @@ export const Solicitacoes = () => {
                     Nova Solicitação
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-md">
+                <DialogContent className="w-full max-w-xs sm:max-w-md p-4 sm:p-6">
                   <DialogHeader>
                     <DialogTitle>{isEditing ? 'Editar Solicitação' : 'Nova Solicitação'}</DialogTitle>
                   </DialogHeader>
@@ -286,7 +286,7 @@ export const Solicitacoes = () => {
                         </SelectContent>
                       </Select>
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-foreground mb-2">
                           Prioridade *
@@ -372,7 +372,7 @@ export const Solicitacoes = () => {
                         onChange={handleInputChange}
                       />
                     </div>
-                    <div className="flex gap-3 pt-4">
+                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-4">
                       <Button variant="outline" className="flex-1" onClick={() => setIsModalOpen(false)}>
                         Cancelar
                       </Button>
@@ -390,7 +390,7 @@ export const Solicitacoes = () => {
 
             {/* Modal de Detalhes da Solicitação */}
             <Dialog open={isDetailsModalOpen} onOpenChange={setIsDetailsModalOpen}>
-              <DialogContent className="max-w-md">
+              <DialogContent className="w-full max-w-xs sm:max-w-md p-4 sm:p-6">
                 <DialogHeader>
                   <DialogTitle className="text-foreground">Detalhes da Solicitação</DialogTitle>
                 </DialogHeader>
@@ -447,7 +447,7 @@ export const Solicitacoes = () => {
 
           {/* Table of Solicitacoes */}
           <div className="mt-6 overflow-x-auto">
-            <table className="min-w-full divide-y divide-border">
+            <table className="min-w-full divide-y divide-border text-xs sm:text-sm">
               <thead>
                 <tr>
                   <th className="py-3 px-6 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider bg-muted rounded-tl-lg">TÍTULO</th>

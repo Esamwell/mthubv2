@@ -160,7 +160,7 @@ export const Configuracoes = () => {
             <User className="w-5 h-5 text-amarelo" />
             <h2 className="text-xl font-semibold text-foreground">Perfil do Usuário</h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
                 Nome Completo
@@ -234,7 +234,7 @@ export const Configuracoes = () => {
             <h2 className="text-xl font-semibold text-foreground">Aparência e Idioma (Em breve)</h2>
           </div>
           <div className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">
                   Idioma

@@ -31,7 +31,7 @@ export const Ajuda = () => {
       {/* Como usar cada página */}
       <div className="mb-8">
         <h2 className="text-2xl font-semibold text-foreground mb-6">Como usar cada página</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="bg-background p-6 rounded-lg border border-border hover:shadow-md transition-shadow">
             <div className="flex items-center justify-center w-12 h-12 bg-orange-100 rounded-lg mb-4">
               <LayoutDashboard className="w-6 h-6 text-orange-500" />

@@ -29,7 +29,7 @@ export const Dashboard = () => {
         <p className="text-muted-foreground mt-2">Gerencie seus clientes e solicitações</p>
       </div>
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
         <StatsCard
           title="Total de Clientes"
           value={isLoading ? '---' : stats?.totalClientes.toString() || '0'}
@@ -64,7 +64,7 @@ export const Dashboard = () => {
       </div>
 
       {/* Charts and Recent Activity */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* Visão Geral das Solicitações */}
         <div className="lg:col-span-2 bg-background p-6 rounded-lg border border-border">
           <h3 className="text-lg font-semibold text-foreground mb-4">Visão Geral das Solicitações</h3>

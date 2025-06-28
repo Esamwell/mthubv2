@@ -209,7 +209,7 @@ export const Usuarios = () => {
                   Novo Usuário
                 </Button>
               </DialogTrigger>
-              <DialogContent className="max-w-md">
+              <DialogContent className="w-full max-w-xs sm:max-w-md p-4 sm:p-6">
                 <DialogHeader>
                   <DialogTitle>Novo Usuário</DialogTitle>
                 </DialogHeader>
@@ -262,13 +262,13 @@ export const Usuarios = () => {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="flex gap-3 pt-4">
+                  <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-4">
                     <Button variant="outline" className="flex-1" type="button" onClick={() => setIsDialogOpen(false)}>
                       Cancelar
                     </Button>
                     <Button
                       type="submit"
-                      className="w-full bg-amarelo hover:bg-amarelo-darker"
+                      className="flex-1 bg-amarelo hover:bg-amarelo-darker"
                       disabled={isActionLoading}
                     >
                       Criar
@@ -299,7 +299,7 @@ export const Usuarios = () => {
 
         {/* Table */}
         <div className="mt-6 overflow-x-auto">
-          <table className="min-w-full divide-y divide-border">
+          <table className="min-w-full divide-y divide-border text-xs sm:text-sm">
             <thead>
               <tr>
                 <th className="py-3 px-6 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider bg-muted rounded-tl-lg">NOME</th>
@@ -346,7 +346,7 @@ export const Usuarios = () => {
       </div>
 
       <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
-        <DialogContent className="max-w-md">
+        <DialogContent className="w-full max-w-xs sm:max-w-md p-4 sm:p-6">
           <DialogHeader>
             <DialogTitle>Editar Usuário</DialogTitle>
           </DialogHeader>
@@ -380,13 +380,13 @@ export const Usuarios = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="flex gap-3 pt-4">
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-4">
                 <Button variant="outline" className="flex-1" type="button" onClick={() => setEditDialogOpen(false)}>
                   Cancelar
                 </Button>
                 <Button
                   type="submit"
-                  className="w-full bg-amarelo hover:bg-amarelo-darker"
+                  className="flex-1 bg-amarelo hover:bg-amarelo-darker"
                   disabled={isActionLoading}
                 >
                   Salvar
