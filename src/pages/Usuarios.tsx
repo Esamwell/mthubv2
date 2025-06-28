@@ -79,19 +79,43 @@ export const Usuarios = () => {
   const handleEditSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsActionLoading(true);
-    await fetch(`/api/usuarios`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        id: editData?.id,
-        nome: editData?.nome,
-        email: editData?.email,
-        user_type: editData?.user_type,
-      }),
-    });
-    setIsActionLoading(false);
-    setEditDialogOpen(false);
-    refetch();
+    try {
+      const response = await fetch(`/api/usuarios`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: editData?.id,
+          nome: editData?.nome,
+          email: editData?.email,
+          user_type: editData?.user_type,
+        }),
+      });
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        toast({
+          title: 'Erro ao editar usuário',
+          description: errorData.error || 'Erro desconhecido ao editar usuário.',
+          variant: 'destructive',
+        });
+        console.error('Erro ao editar usuário:', errorData);
+      } else {
+        toast({
+          title: 'Usuário atualizado!',
+          description: 'Os dados do usuário foram salvos com sucesso.',
+        });
+        setEditDialogOpen(false);
+        refetch();
+      }
+    } catch (error) {
+      toast({
+        title: 'Erro de conexão',
+        description: 'Não foi possível conectar ao servidor.',
+        variant: 'destructive',
+      });
+      console.error('Erro de conexão ao editar usuário:', error);
+    } finally {
+      setIsActionLoading(false);
+    }
   };
 
   const filteredUsuarios = usuarios.filter(usuario =>
