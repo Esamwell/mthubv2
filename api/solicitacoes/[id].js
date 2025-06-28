@@ -26,7 +26,7 @@ export default async function handler(req, res) {
     } catch (err) {
       return res.status(500).json({ error: 'Erro interno do servidor.' });
     }
-  } else if (req.method === 'PUT') {
+  } else if (req.method === 'PUT' || (req.method === 'POST' && req.body && req.body._method === 'PUT')) {
     const { titulo, categoria_id, prioridade, cliente_id, status, dataEntrega, descricao } = req.body;
 
     try {
