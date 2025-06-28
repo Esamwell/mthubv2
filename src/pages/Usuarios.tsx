@@ -37,7 +37,11 @@ export const Usuarios = () => {
 
   const handleDelete = async (id: string) => {
     setIsActionLoading(true);
-    await fetch(`/api/deletar-usuario?id=${id}`, { method: 'DELETE' });
+    await fetch('/api/deletar-usuario', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id }),
+    });
     setIsActionLoading(false);
     refetch();
   };
