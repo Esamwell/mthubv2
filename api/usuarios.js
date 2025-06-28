@@ -60,7 +60,7 @@ export default async function handler(req, res) {
     return res.status(200).json({ user: data });
   } else if (req.method === 'DELETE') {
     // Excluir usuário
-    const { id } = req.body;
+    const { id } = req.query;
     if (!id) return res.status(400).json({ error: 'ID não informado.' });
     const { error, data } = await supabase.from('profiles').delete().eq('id', id);
     if (error) return res.status(400).json({ error: error.message, details: error });
