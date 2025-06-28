@@ -137,17 +137,17 @@ export const SolicitacaoDetalhes: React.FC<SolicitacaoDetalhesProps> = ({ id }) 
         </label>
         <Input
           type="date"
-          value={solicitacao.data_prazo ? new Date(solicitacao.data_prazo).toISOString().split('T')[0] : ''}
+          value={solicitacao.data_prazo && !isNaN(new Date(solicitacao.data_prazo).getTime()) ? new Date(solicitacao.data_prazo).toISOString().split('T')[0] : ''}
           readOnly
         />
       </div>
-      {solicitacao.data_conclusao && (
+      {solicitacao.data_conclusao && !isNaN(new Date(solicitacao.data_conclusao).getTime()) && (
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Concluído Em
           </label>
           <Input
-            value={new Date(solicitacao.data_conclusao).toLocaleDateString()}
+            value={solicitacao.data_conclusao && !isNaN(new Date(solicitacao.data_conclusao).getTime()) ? new Date(solicitacao.data_conclusao).toLocaleDateString() : 'N/A'}
             readOnly
           />
         </div>
@@ -157,7 +157,7 @@ export const SolicitacaoDetalhes: React.FC<SolicitacaoDetalhesProps> = ({ id }) 
           Descrição
         </label>
         <Textarea
-          value={solicitacao.descricao}
+          value={solicitacao.descricao || ''}
           readOnly
           rows={3}
         />
@@ -167,7 +167,7 @@ export const SolicitacaoDetalhes: React.FC<SolicitacaoDetalhesProps> = ({ id }) 
           Criado em
         </label>
         <Input
-          value={new Date(solicitacao.created_at).toLocaleString()}
+          value={solicitacao.created_at && !isNaN(new Date(solicitacao.created_at).getTime()) ? new Date(solicitacao.created_at).toLocaleString() : 'N/A'}
           readOnly
         />
       </div>
@@ -176,7 +176,7 @@ export const SolicitacaoDetalhes: React.FC<SolicitacaoDetalhesProps> = ({ id }) 
           Última atualização
         </label>
         <Input
-          value={new Date(solicitacao.updated_at).toLocaleString()}
+          value={solicitacao.updated_at && !isNaN(new Date(solicitacao.updated_at).getTime()) ? new Date(solicitacao.updated_at).toLocaleString() : 'N/A'}
           readOnly
         />
       </div>
