@@ -32,8 +32,8 @@ export const Layout = ({ children }: LayoutProps) => {
   const filteredMenuItems = menuItems.filter(item => item.roles.includes(profile?.user_type || 'cliente'));
 
   return (
-    <div className="flex min-h-screen bg-background">
-      <aside className="w-64 flex flex-col bg-sidebar text-sidebar-foreground border-r border-border">
+    <div className="bg-background min-h-screen">
+      <aside className="fixed top-0 left-0 h-screen w-64 flex flex-col bg-sidebar text-sidebar-foreground border-r border-border z-30">
         <div className="flex items-center gap-2 justify-center p-4 mb-4 border-b border-border">
           <img src="/mthub-logo.png" alt="MTHub Logo" className="h-10 object-contain w-auto" />
         </div>
@@ -89,7 +89,7 @@ export const Layout = ({ children }: LayoutProps) => {
           </Button>
         </div>
       </aside>
-      <main className="flex-1 bg-background">
+      <main className="ml-64 bg-background">
         <Topbar />
         <div className="p-8">
           <div className="max-w-6xl mx-auto w-full">
