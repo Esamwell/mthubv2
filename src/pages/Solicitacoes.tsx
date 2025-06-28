@@ -122,14 +122,37 @@ export const Solicitacoes = () => {
         return;
       }
 
+      // Padronizar status e dataEntrega
+      const statusPadronizado = (() => {
+        switch (newSolicitacao.status.toLowerCase().replace(/ /g, '_')) {
+          case 'pendente': return 'pendente';
+          case 'em_andamento':
+          case 'em andamento': return 'em_andamento';
+          case 'concluida':
+          case 'concluído':
+          case 'concluido': return 'concluida';
+          case 'cancelada': return 'cancelada';
+          default: return 'pendente';
+        }
+      })();
+      const dataEntregaPadronizada = newSolicitacao.dataEntrega ? newSolicitacao.dataEntrega : null;
+
+      const solicitacaoParaEnviar = {
+        ...newSolicitacao,
+        status: statusPadronizado,
+        dataEntrega: dataEntregaPadronizada,
+      };
+
+      console.log('Enviando para edição/criação:', solicitacaoParaEnviar);
+
       if (isEditing && editingSolicitacao) {
-        await axios.put(`/api/solicitacoes/${editingSolicitacao.id}`, newSolicitacao);
+        await axios.put(`/api/solicitacoes/${editingSolicitacao.id}`, solicitacaoParaEnviar);
         toast({
           title: "Sucesso!",
           description: "Solicitação atualizada com sucesso.",
         });
       } else {
-        await axios.post('/api/solicitacoes', newSolicitacao);
+        await axios.post('/api/solicitacoes', solicitacaoParaEnviar);
         toast({
           title: "Sucesso!",
           description: "Solicitação criada com sucesso.",
