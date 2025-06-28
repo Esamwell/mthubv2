@@ -37,7 +37,7 @@ export const Usuarios = () => {
 
   const handleDelete = async (id: string) => {
     setIsActionLoading(true);
-    await fetch(`/api/deletar-usuario/${id}`, { method: 'DELETE' });
+    await fetch(`/api/deletar-usuario?id=${id}`, { method: 'DELETE' });
     setIsActionLoading(false);
     refetch();
   };
@@ -50,7 +50,7 @@ export const Usuarios = () => {
   const handleEditSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsActionLoading(true);
-    await fetch(`/api/editar-usuario/${editData?.id}`, {
+    await fetch(`/api/editar-usuario?id=${editData?.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

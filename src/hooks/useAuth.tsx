@@ -46,7 +46,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setLoading(true);
     console.log('useAuth: Tentando login com:', email);
     try {
-      const res = await fetch('/api/login-cliente', {
+      const API_URL = import.meta.env.VITE_API_URL || '';
+      const endpoint = API_URL ? `${API_URL}/login-cliente` : '/login-cliente';
+      const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, senha })
