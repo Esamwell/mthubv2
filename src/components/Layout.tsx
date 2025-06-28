@@ -103,8 +103,10 @@ export const Layout = ({ children }: LayoutProps) => {
         </Sidebar>
         <main className="flex-1 overflow-auto flex flex-col">
           <Topbar />
-          <div className="flex-1 p-8">{/* Container com padding padrão */}
-            {children}
+          <div className="flex-1 p-4 sm:p-8">
+            <div className="max-w-7xl mx-auto w-full">
+              {children}
+            </div>
           </div>
         </main>
       </div>
