@@ -79,10 +79,11 @@ export const Usuarios = () => {
   const handleEditSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsActionLoading(true);
-    await fetch(`/api/editar-usuario?id=${editData?.id}`, {
-      method: 'PUT',
+    await fetch(`/api/usuarios`, {
+      method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
+        id: editData?.id,
         nome: editData?.nome,
         email: editData?.email,
         user_type: editData?.user_type,

@@ -199,11 +199,11 @@ export const Configuracoes = () => {
           <div className="bg-background rounded-lg border border-border p-6">
             <div className="flex items-center gap-2 mb-6">
               <Bell className="w-5 h-5 text-amarelo" />
-              <h2 className="text-xl font-semibold text-foreground">Notificações</h2>
+              <h2 className="text-xl font-semibold text-foreground">Notificações (Em breve)</h2>
             </div>
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <label htmlFor="system-notifications" className="text-sm font-medium text-foreground">Notificações do Sistema (Em breve)</label>
+                <label htmlFor="system-notifications" className="text-sm font-medium text-foreground">Notificações do Sistema </label>
                 <Switch
                   id="system-notifications"
                   checked={systemNotifications}
