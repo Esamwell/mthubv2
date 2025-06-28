@@ -23,7 +23,9 @@ export const useCalendarioData = (month: number, year: number) => {
           // Filtra solicitações do mês/ano selecionados
           return response.data.filter((sol: any) => {
             if (!sol.data_prazo) return false;
-            const data = new Date(sol.data_prazo);
+            // Força horário zero para datas no formato YYYY-MM-DD
+            const data = new Date(sol.data_prazo.length === 10 ? sol.data_prazo + 'T00:00:00' : sol.data_prazo);
+            console.log('Comparando:', data, 'com mês:', month, 'e ano:', year);
             return data.getMonth() === month && data.getFullYear() === year;
           });
         } catch (err) {
