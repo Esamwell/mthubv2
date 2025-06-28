@@ -24,10 +24,5 @@
   ],
   "installCommand": "npm install && cd api && npm install",
   "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "functions": {
-    "api/server.js": {
-      "maxDuration": 30
-    }
-  }
+  "outputDirectory": "dist"
 } 
