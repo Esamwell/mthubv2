@@ -4,14 +4,14 @@ import { StatsCard } from '@/components/StatsCard';
 import { Users, FileText, Clock, CheckCircle, FolderOpen, Calendar } from 'lucide-react';
 import { useDashboardStats } from '@/hooks/useDashboardStats';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
-import { useRecentSolicitacoes } from '@/hooks/useRecentSolicitacoes';
+import { useSolicitacoes } from '@/hooks/useSolicitacoes';
 
 export const Dashboard = () => {
   const { stats, isLoading, error } = useDashboardStats();
-  const { recentSolicitacoes, loadingRecent, errorRecent } = useRecentSolicitacoes();
+  const { solicitacoes, loading, error: errorSolicitacoes } = useSolicitacoes();
 
   // Debug: logar as solicitações recentes
-  console.log('Solicitações Recentes:', recentSolicitacoes);
+  console.log('Solicitações Recentes:', solicitacoes);
 
   const pieChartData = [
     { name: 'Pendentes', value: stats?.solicitacoesPendentes || 0, color: '#FFBF00' },
@@ -119,15 +119,15 @@ export const Dashboard = () => {
               <h3 className="text-lg font-semibold text-foreground">Solicitações Recentes</h3>
               <FileText className="w-5 h-5 text-amarelo" />
             </div>
-            {loadingRecent ? (
-              <div className="text-center py-8 text-muted-foreground"><p>Carregando solicitações recentes...</p></div>
-            ) : errorRecent ? (
-              <div className="text-center py-8 text-destructive"><p>Erro ao carregar solicitações recentes.</p></div>
-            ) : recentSolicitacoes.length === 0 ? (
-              <div className="text-center py-8 text-muted-foreground"><p>Nenhuma solicitação recente encontrada.</p></div>
+            {loading ? (
+              <div className="text-center py-8 text-muted-foreground"><p>Carregando solicitações...</p></div>
+            ) : errorSolicitacoes ? (
+              <div className="text-center py-8 text-destructive"><p>Erro ao carregar solicitações.</p></div>
+            ) : solicitacoes.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground"><p>Nenhuma solicitação encontrada.</p></div>
             ) : (
               <div className="space-y-4">
-                {(Array.isArray(recentSolicitacoes) ? recentSolicitacoes : []).map(solicitacao => (
+                {(Array.isArray(solicitacoes) ? solicitacoes : []).map(solicitacao => (
                   <div key={solicitacao.id} className="border border-border rounded-lg p-4 flex flex-col gap-1 bg-muted">
                     <div className="flex justify-between items-center">
                       <span className="font-semibold text-foreground">{solicitacao.titulo}</span>
