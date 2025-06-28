@@ -125,14 +125,8 @@ export const Dashboard = () => {
             ) : (
               <div className="space-y-4">
                 {(Array.isArray(recentSolicitacoes) ? recentSolicitacoes : []).map(solicitacao => (
-                  <div key={solicitacao.id} className="flex items-start gap-3 p-3 bg-muted rounded-md">
-                    <div className="w-2 h-2 rounded-full bg-amarelo mt-2 flex-shrink-0"></div>
-                    <div>
-                      <p className="text-sm font-medium text-foreground">{solicitacao.titulo}</p>
-                      <p className="text-xs text-muted-foreground">
-                        Criado em: {new Date(solicitacao.created_at).toLocaleDateString()} - {solicitacao.cliente?.nome || 'N/A'}
-                      </p>
-                    </div>
+                  <div key={solicitacao.id} style={{ border: '1px solid red', margin: 4 }}>
+                    <pre>{JSON.stringify(solicitacao, null, 2)}</pre>
                   </div>
                 ))}
               </div>
