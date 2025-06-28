@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
 
 export default async function handler(req, res) {
+  console.log('Método recebido:', req.method, 'Query:', req.query, 'Body:', req.body);
   if (req.method === 'GET') {
     // Listar usuários
     try {
