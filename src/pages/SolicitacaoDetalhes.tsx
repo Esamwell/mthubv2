@@ -11,7 +11,9 @@ interface SolicitacaoDetalhesProps {
 }
 
 export const SolicitacaoDetalhes: React.FC<SolicitacaoDetalhesProps> = ({ id }) => {
-  const { solicitacao, loading, error } = useSolicitacao(id);
+  console.log('SolicitacaoDetalhes: ID recebido:', id);
+  const { solicitacao, isLoading, error } = useSolicitacao(id);
+  console.log('SolicitacaoDetalhes: Dados recebidos do hook:', solicitacao);
 
   const getPriorityColor = (prioridade: string) => {
     switch (prioridade) {
@@ -32,7 +34,7 @@ export const SolicitacaoDetalhes: React.FC<SolicitacaoDetalhesProps> = ({ id }) 
     }
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="p-4 text-center">
         <p>Carregando detalhes da solicitação...</p>
@@ -43,15 +45,15 @@ export const SolicitacaoDetalhes: React.FC<SolicitacaoDetalhesProps> = ({ id }) 
   if (error) {
     return (
       <div className="p-4 text-center text-red-500">
-        <p>Erro ao carregar detalhes da solicitação: {error}</p>
+        <p>Erro ao carregar detalhes da solicitação: {error instanceof Error ? error.message : String(error)}</p>
       </div>
     );
   }
 
   if (!solicitacao) {
     return (
-      <div className="p-4 text-center">
-        <p>Solicitação não encontrada.</p>
+      <div className="p-4 text-center text-red-500">
+        <p>Solicitação não encontrada ou não foi possível carregar os dados.<br/>Verifique se o ID está correto e se há dados no banco.</p>
       </div>
     );
   }
