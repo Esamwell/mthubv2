@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
 export const Calendario = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [viewMode, setViewMode] = useState<'calendar' | 'list'>('calendar');
-  const { solicitacoes, loading, error } = useCalendarioData(currentDate.getMonth(), currentDate.getFullYear());
+  const { eventos, isLoading, error } = useCalendarioData(currentDate.getMonth(), currentDate.getFullYear());
 
   const monthNames = [
     'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
@@ -62,10 +62,14 @@ export const Calendario = () => {
   };
 
   const getSolicitacoesForDay = (day: Date) => {
-    if (loading || error) return [];
-    return (solicitacoes || []).filter(sol => {
-      const prazoDate = new Date(sol.data_prazo);
-      return isSameDay(prazoDate, day);
+    if (isLoading || error) return [];
+    return (eventos || []).filter(sol => {
+      const prazoDate = new Date(sol.data_prazo && sol.data_prazo.length === 10 ? sol.data_prazo + 'T00:00:00' : sol.data_prazo);
+      const match = isSameDay(prazoDate, day);
+      if (match) {
+        console.log('Solicitação para o dia:', day, sol);
+      }
+      return match;
     });
   };
 
@@ -87,14 +91,14 @@ export const Calendario = () => {
     }
   };
 
-  const groupedSolicitacoes = (solicitacoes || []).reduce((acc, sol) => {
+  const groupedSolicitacoes = (eventos || []).reduce((acc, sol) => {
     const dateKey = new Date(sol.data_prazo).toLocaleDateString('pt-BR');
     if (!acc[dateKey]) {
       acc[dateKey] = [];
     }
     acc[dateKey].push(sol);
     return acc;
-  }, {} as Record<string, typeof solicitacoes>);
+  }, {} as Record<string, typeof eventos>);
 
   const sortedDates = Object.keys(groupedSolicitacoes).sort((a, b) => {
     const dateA = new Date(a.split('/').reverse().join('-'));
@@ -219,12 +223,12 @@ export const Calendario = () => {
         ) : (
           <div className="bg-background rounded-lg border border-border p-6">
             <h2 className="text-xl font-semibold text-foreground mb-4">Solicitações em Lista</h2>
-            {loading && <p className="text-muted-foreground">Carregando solicitações...</p>}
+            {isLoading && <p className="text-muted-foreground">Carregando solicitações...</p>}
             {error && <p className="text-destructive">Erro ao carregar solicitações: {error}</p>}
-            {!loading && !error && sortedDates.length === 0 && (
+            {!isLoading && !error && sortedDates.length === 0 && (
               <p className="text-muted-foreground">Nenhuma solicitação encontrada para este mês.</p>
             )}
-            {!loading && !error && sortedDates.length > 0 && (
+            {!isLoading && !error && sortedDates.length > 0 && (
               <div className="space-y-6">
                 {sortedDates.map(date => (
                   <div key={date}>

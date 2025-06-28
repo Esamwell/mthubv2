@@ -4,11 +4,12 @@ import axios from 'axios';
 interface EventoCalendario {
   id: string;
   titulo: string;
-  start: string;
-  end: string;
-  prioridade: 'baixa' | 'media' | 'alta';
-  status: 'pendente' | 'em andamento' | 'concluido';
-  cliente_nome: string;
+  data_prazo: string;
+  prioridade: string;
+  status: string;
+  cliente?: { nome: string };
+  categoria?: { nome: string };
+  // outros campos conforme necessário
 }
 
 export const useCalendarioData = (month: number, year: number) => {
