@@ -203,7 +203,7 @@ export const Configuracoes = () => {
             </div>
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <label htmlFor="system-notifications" className="text-sm font-medium text-foreground">Notificações do Sistema</label>
+                <label htmlFor="system-notifications" className="text-sm font-medium text-foreground">Notificações do Sistema (Em breve)</label>
                 <Switch
                   id="system-notifications"
                   checked={systemNotifications}
@@ -233,7 +233,7 @@ export const Configuracoes = () => {
           <div className="bg-background rounded-lg border border-border p-6">
             <div className="flex items-center gap-2 mb-6">
               <Globe className="w-5 h-5 text-amarelo" />
-              <h2 className="text-xl font-semibold text-foreground">Aparência e Idioma</h2>
+              <h2 className="text-xl font-semibold text-foreground">Aparência e Idioma (Em breve)</h2>
             </div>
             <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
