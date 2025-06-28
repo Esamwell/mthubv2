@@ -41,8 +41,8 @@ export const Usuarios = () => {
     }
     setIsActionLoading(true);
     try {
-      const response = await fetch('/api/deletar-usuario', {
-        method: 'POST',
+      const response = await fetch('/api/usuarios', {
+        method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id }),
       });
