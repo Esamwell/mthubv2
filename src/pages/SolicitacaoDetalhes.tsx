@@ -5,15 +5,20 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { Solicitacao } from '@/hooks/useSolicitacoes';
 
 interface SolicitacaoDetalhesProps {
-  id: string | undefined;
+  solicitacao: Solicitacao;
 }
 
-export const SolicitacaoDetalhes: React.FC<SolicitacaoDetalhesProps> = ({ id }) => {
-  console.log('SolicitacaoDetalhes: ID recebido:', id);
-  const { solicitacao, isLoading, error } = useSolicitacao(id);
-  console.log('SolicitacaoDetalhes: Dados recebidos do hook:', solicitacao);
+export const SolicitacaoDetalhes: React.FC<SolicitacaoDetalhesProps> = ({ solicitacao }) => {
+  if (!solicitacao) {
+    return (
+      <div className="p-4 text-center text-red-500">
+        <p>Solicitação não encontrada ou não foi possível carregar os dados.<br/>Verifique se o ID está correto e se há dados no banco.</p>
+      </div>
+    );
+  }
 
   const getPriorityColor = (prioridade: string) => {
     switch (prioridade) {
@@ -33,30 +38,6 @@ export const SolicitacaoDetalhes: React.FC<SolicitacaoDetalhesProps> = ({ id }) 
       default: return 'bg-gray-100 text-gray-800';
     }
   };
-
-  if (isLoading) {
-    return (
-      <div className="p-4 text-center">
-        <p>Carregando detalhes da solicitação...</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="p-4 text-center text-red-500">
-        <p>Erro ao carregar detalhes da solicitação: {error instanceof Error ? error.message : String(error)}</p>
-      </div>
-    );
-  }
-
-  if (!solicitacao) {
-    return (
-      <div className="p-4 text-center text-red-500">
-        <p>Solicitação não encontrada ou não foi possível carregar os dados.<br/>Verifique se o ID está correto e se há dados no banco.</p>
-      </div>
-    );
-  }
 
   return (
     <div className="space-y-4">

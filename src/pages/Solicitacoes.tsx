@@ -48,6 +48,8 @@ export const Solicitacoes = () => {
     descricao: '',
   });
 
+  const [selectedSolicitacao, setSelectedSolicitacao] = useState<Solicitacao | null>(null);
+
   useEffect(() => {
     if (!isModalOpen) {
       setNewSolicitacao({
@@ -206,6 +208,11 @@ export const Solicitacoes = () => {
 
   const handleRefresh = () => {
     fetchSolicitacoes();
+  };
+
+  const handleViewClick = (solicitacao: Solicitacao) => {
+    setSelectedSolicitacao(solicitacao);
+    setIsDetailsModalOpen(true);
   };
 
   const filteredSolicitacoes = (solicitacoes || []).filter(item => {
@@ -387,7 +394,7 @@ export const Solicitacoes = () => {
                 <DialogHeader>
                   <DialogTitle className="text-foreground">Detalhes da Solicitação</DialogTitle>
                 </DialogHeader>
-                {selectedSolicitacaoId && <SolicitacaoDetalhes id={selectedSolicitacaoId} />}
+                {selectedSolicitacao && <SolicitacaoDetalhes solicitacao={selectedSolicitacao} />}
               </DialogContent>
             </Dialog>
 
@@ -481,10 +488,7 @@ export const Solicitacoes = () => {
                       <TableCell className="py-3 px-6 text-foreground">{item.data_prazo ? new Date(item.data_prazo).toLocaleDateString() : 'N/A'}</TableCell>
                       <TableCell className="py-3 px-6 text-foreground">{item.data_conclusao ? new Date(item.data_conclusao).toLocaleDateString() : '-'}</TableCell>
                       <TableCell className="py-3 px-6 text-foreground flex gap-2">
-                        <Button variant="outline" size="icon" onClick={() => {
-                          setSelectedSolicitacaoId(item.id);
-                          setIsDetailsModalOpen(true);
-                        }} className="text-foreground hover:bg-accent border-border">
+                        <Button variant="outline" size="icon" onClick={() => handleViewClick(item)} className="text-foreground hover:bg-accent border-border">
                           <Eye className="w-4 h-4" />
                         </Button>
                         <Button variant="outline" size="icon" onClick={() => handleEditClick(item)} className="text-foreground hover:bg-accent border-border">
@@ -500,16 +504,6 @@ export const Solicitacoes = () => {
               </tbody>
             </table>
           </div>
-
-          {/* Details Modal */}
-          <Dialog open={isDetailsModalOpen} onOpenChange={setIsDetailsModalOpen}>
-            <DialogContent className="max-w-md">
-              <DialogHeader>
-                <DialogTitle className="text-foreground">Detalhes da Solicitação</DialogTitle>
-              </DialogHeader>
-              {selectedSolicitacaoId && <SolicitacaoDetalhes id={selectedSolicitacaoId} />}
-            </DialogContent>
-          </Dialog>
         </div>
       </div>
     </Layout>
