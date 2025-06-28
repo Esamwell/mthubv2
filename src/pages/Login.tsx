@@ -11,17 +11,15 @@ export const Login = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulação de login - redireciona para dashboard
     navigate('/dashboard');
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-to-br from-[#181824] via-[#23243a] to-[#181824]">
-      {/* Efeito vidro e fundo animado */}
-      <div className="absolute inset-0 z-0 bg-[url('/public/placeholder.svg')] bg-cover bg-center opacity-30 blur-sm" />
-      <div className="absolute top-1/4 left-1/4 w-48 h-48 bg-yellow-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-yellow-600 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
-      <div className="absolute top-1/2 right-1/3 w-56 h-56 bg-yellow-700 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
+    <div className="min-h-screen flex items-center justify-center p-4 relative bg-gradient-to-br from-[#181824] via-[#23243a] to-[#181824]">
+      {/* Fundo animado sutil */}
+      <div className="absolute top-1/4 left-1/4 w-60 h-60 bg-yellow-500 rounded-full mix-blend-multiply filter blur-2xl opacity-10 animate-blob animation-delay-2000" />
+      <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-yellow-600 rounded-full mix-blend-multiply filter blur-2xl opacity-10 animate-blob animation-delay-4000" />
+      <div className="absolute top-1/2 right-1/3 w-56 h-56 bg-yellow-700 rounded-full mix-blend-multiply filter blur-2xl opacity-10 animate-blob" />
 
       <div className="relative z-10 w-full max-w-md rounded-2xl p-8 md:p-10 shadow-2xl border border-white/20 bg-white/10 backdrop-blur-md flex flex-col items-center">
         <h1 className="text-3xl md:text-4xl font-bold text-yellow-400 mb-2 text-center drop-shadow">MTHub</h1>
