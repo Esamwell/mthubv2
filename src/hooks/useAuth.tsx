@@ -101,7 +101,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setLoading(true);
     console.log('useAuth: Tentando cadastrar com:', dados.email);
     try {
-      const res = await fetch('/api/cadastrar-usuario', {
+      const res = await fetch('/api/usuarios', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dados)
