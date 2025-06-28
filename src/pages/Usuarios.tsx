@@ -36,14 +36,41 @@ export const Usuarios = () => {
   const [isActionLoading, setIsActionLoading] = useState(false);
 
   const handleDelete = async (id: string) => {
+    if (!window.confirm('Tem certeza que deseja excluir este usuário?')) {
+      return;
+    }
     setIsActionLoading(true);
-    await fetch('/api/deletar-usuario', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id }),
-    });
-    setIsActionLoading(false);
-    refetch();
+    try {
+      const response = await fetch('/api/deletar-usuario', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id }),
+      });
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        toast({
+          title: 'Erro ao excluir usuário',
+          description: errorData.error || 'Não foi possível excluir o usuário.',
+          variant: 'destructive',
+        });
+        console.error('Erro ao excluir usuário:', errorData);
+      } else {
+        toast({
+          title: 'Usuário excluído',
+          description: 'O usuário foi removido com sucesso.',
+        });
+        refetch();
+      }
+    } catch (error) {
+      toast({
+        title: 'Erro ao excluir usuário',
+        description: 'Ocorreu um erro inesperado.',
+        variant: 'destructive',
+      });
+      console.error('Erro ao excluir usuário:', error);
+    } finally {
+      setIsActionLoading(false);
+    }
   };
 
   const handleEdit = (usuario: Usuario) => {
