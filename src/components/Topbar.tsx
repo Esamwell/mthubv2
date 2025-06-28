@@ -20,11 +20,7 @@ export const Topbar = () => {
   };
 
   return (
-    <div className="flex items-center justify-between h-16 bg-background border-b border-border px-4 sm:px-6">
-      {/* Botão de menu para mobile */}
-      <div className="flex sm:hidden">
-        <SidebarTrigger />
-      </div>
+    <div className="flex items-center justify-end h-16 bg-background border-b border-border px-8">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Avatar className="h-9 w-9 cursor-pointer border-2 border-amarelo">
