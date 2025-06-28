@@ -92,7 +92,7 @@ export const Solicitacoes = () => {
   const handleDeleteClick = async (id: string) => {
     if (window.confirm('Tem certeza que deseja excluir esta solicitação?')) {
       try {
-        await axios.delete(`/api/solicitacoes/${id}`);
+        await axios.post('/api/delete-solicitacao', { id });
         toast({
           title: "Sucesso!",
           description: "Solicitação excluída com sucesso.",
