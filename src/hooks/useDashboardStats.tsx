@@ -14,10 +14,10 @@ export const useDashboardStats = () => {
     queryFn: async () => {
       console.log('useDashboardStats: Buscando estatísticas do dashboard...');
       const [clientesRes, pendenteRes, emAndamentoRes, concluidaRes] = await Promise.all([
-        axios.get('/api/counts/clientes'),
-        axios.get('/api/counts/solicitacoes/pendente'),
-        axios.get('/api/counts/solicitacoes/em_andamento'),
-        axios.get('/api/counts/solicitacoes/concluida'),
+        axios.get('/api/counts-clientes'),
+        axios.get('/api/counts-solicitacoes?status=pendente'),
+        axios.get('/api/counts-solicitacoes?status=em_andamento'),
+        axios.get('/api/counts-solicitacoes?status=concluida'),
       ]);
 
       return {
