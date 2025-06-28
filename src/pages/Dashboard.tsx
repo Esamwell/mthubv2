@@ -128,8 +128,16 @@ export const Dashboard = () => {
             ) : (
               <div className="space-y-4">
                 {(Array.isArray(recentSolicitacoes) ? recentSolicitacoes : []).map(solicitacao => (
-                  <div key={solicitacao.id} style={{ border: '1px solid red', margin: 4 }}>
-                    <pre>{JSON.stringify(solicitacao, null, 2)}</pre>
+                  <div key={solicitacao.id} className="border border-border rounded-lg p-4 flex flex-col gap-1 bg-muted">
+                    <div className="flex justify-between items-center">
+                      <span className="font-semibold text-foreground">{solicitacao.titulo}</span>
+                      <span className="text-xs px-2 py-1 rounded bg-gray-200 text-gray-800">{solicitacao.status?.replace(/_/g, ' ')}</span>
+                    </div>
+                    <div className="text-sm text-muted-foreground">
+                      Cliente: {solicitacao.cliente?.nome || 'N/A'}<br/>
+                      Categoria: {solicitacao.categoria?.nome || 'N/A'}<br/>
+                      Criado em: {solicitacao.created_at ? new Date(solicitacao.created_at).toLocaleDateString() : 'N/A'}
+                    </div>
                   </div>
                 ))}
               </div>
