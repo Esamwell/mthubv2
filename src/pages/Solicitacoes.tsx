@@ -146,9 +146,9 @@ export const Solicitacoes = () => {
       console.log('Enviando para edição/criação:', solicitacaoParaEnviar);
 
       if (isEditing && editingSolicitacao) {
-        await axios.post(`/api/solicitacoes/${editingSolicitacao.id}`, {
+        await axios.post('/api/update-solicitacao', {
+          id: editingSolicitacao.id,
           ...solicitacaoParaEnviar,
-          _method: 'PUT',
         });
         toast({
           title: "Sucesso!",
