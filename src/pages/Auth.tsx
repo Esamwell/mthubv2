@@ -71,20 +71,10 @@ export const Auth = () => {
               />
             </div>
           </div>
-          <div className="flex items-center justify-between text-xs text-gray-200 mb-2">
-            <label className="flex items-center gap-2 cursor-pointer select-none">
-              <input type="checkbox" className="accent-yellow-400 rounded" />
-              Lembrar senha
-            </label>
-            <a href="#" className="text-yellow-300 hover:text-yellow-400 transition-colors">Esqueci a senha</a>
-          </div>
           <Button type="submit" className="w-full rounded-full bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold py-2 text-lg shadow-md transition-all" disabled={loading}>
             {loading ? 'Entrando...' : 'Entrar'}
           </Button>
         </form>
-        <div className="mt-6 text-center text-sm text-gray-200">
-          Não tem uma conta? <a href="#" className="font-semibold text-yellow-300 hover:text-yellow-400 transition-colors">Cadastre-se</a>
-        </div>
       </div>
     </div>
   );
