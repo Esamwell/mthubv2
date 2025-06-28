@@ -296,6 +296,8 @@ export const Usuarios = () => {
             </Button>
           </div>
         </div>
+
+        {/* Table */}
         <div className="mt-6 overflow-x-auto">
           <table className="min-w-full divide-y divide-border text-xs sm:text-sm">
             <thead>
