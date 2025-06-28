@@ -7,7 +7,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { useRecentSolicitacoes } from '@/hooks/useRecentSolicitacoes';
 
 export const Dashboard = () => {
-  const { stats, loading, error } = useDashboardStats();
+  const { stats, isLoading, error } = useDashboardStats();
   const { recentSolicitacoes, loadingRecent, errorRecent } = useRecentSolicitacoes();
 
   const pieChartData = [
@@ -31,25 +31,25 @@ export const Dashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
           <StatsCard
             title="Total de Clientes"
-            value={loading ? '---' : stats?.totalClientes.toString() || '0'}
+            value={isLoading ? '---' : stats?.totalClientes.toString() || '0'}
             icon={Users}
             iconColor="text-blue-500"
           />
           <StatsCard
             title="Solicitações Pendentes"
-            value={loading ? '---' : stats?.solicitacoesPendentes.toString() || '0'}
+            value={isLoading ? '---' : stats?.solicitacoesPendentes.toString() || '0'}
             icon={FileText}
             iconColor="text-amarelo"
           />
           <StatsCard
             title="Em Andamento"
-            value={loading ? '---' : stats?.solicitacoesEmAndamento.toString() || '0'}
+            value={isLoading ? '---' : stats?.solicitacoesEmAndamento.toString() || '0'}
             icon={Clock}
             iconColor="text-blue-500"
           />
           <StatsCard
             title="Solicitações Concluídas"
-            value={loading ? '---' : stats?.solicitacoesConcluidas.toString() || '0'}
+            value={isLoading ? '---' : stats?.solicitacoesConcluidas.toString() || '0'}
             icon={CheckCircle}
             iconColor="text-green-500"
           />
@@ -67,7 +67,7 @@ export const Dashboard = () => {
           {/* Visão Geral das Solicitações */}
           <div className="lg:col-span-2 bg-background p-6 rounded-lg border border-border">
             <h3 className="text-lg font-semibold text-foreground mb-4">Visão Geral das Solicitações</h3>
-            {loading ? (
+            {isLoading ? (
               <div className="h-64 flex items-center justify-center text-muted-foreground">
                 <p>Carregando solicitações...</p>
               </div>
@@ -124,7 +124,7 @@ export const Dashboard = () => {
               <div className="text-center py-8 text-muted-foreground"><p>Nenhuma solicitação recente encontrada.</p></div>
             ) : (
               <div className="space-y-4">
-                {recentSolicitacoes.map(solicitacao => (
+                {(Array.isArray(recentSolicitacoes) ? recentSolicitacoes : []).map(solicitacao => (
                   <div key={solicitacao.id} className="flex items-start gap-3 p-3 bg-muted rounded-md">
                     <div className="w-2 h-2 rounded-full bg-amarelo mt-2 flex-shrink-0"></div>
                     <div>
@@ -151,7 +151,7 @@ export const Dashboard = () => {
             <Calendar className="w-5 h-5 text-amarelo" />
             <h3 className="text-lg font-semibold text-gray-900">Atividades Hoje</h3>
           </div>
-          {loading ? <p>Carregando atividades...</p> : error ? <p>Erro ao carregar atividades.</p> : <p>Nenhuma atividade para hoje</p>}
+          {isLoading ? <p>Carregando atividades...</p> : error ? <p>Erro ao carregar atividades.</p> : <p>Nenhuma atividade para hoje</p>}
         </div>
       </div>
     </Layout>
