@@ -1,31 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useToast } from '@/hooks/use-toast';
-import type { Solicitacao } from './useSolicitacoes';
-
-// Reutiliza a interface Solicitacao do useSolicitacoes para consistência
-interface Solicitacao {
-  id: string;
-  titulo: string;
-  categoria_id: string;
-  categoria: { nome: string };
-  prioridade: 'baixa' | 'media' | 'alta';
-  cliente_id: string;
-  cliente: { nome: string };
-  status: 'pendente' | 'em_andamento' | 'concluida' | 'cancelada';
-  data_prazo: string;
-  data_conclusao?: string;
-  descricao: string;
-  created_at: string;
-  updated_at: string;
-}
+import { Solicitacao } from './useSolicitacoes';
 
 export const useSolicitacao = (id?: string) => {
   const { toast } = useToast();
 
-  const { data: solicitacao, isLoading, error, refetch } = useQuery<Solicitacao>(
-    ['solicitacao', id],
-    async () => {
+  const { data: solicitacao, isLoading, error, refetch } = useQuery<Solicitacao>({
+    queryKey: ['solicitacao', id],
+    queryFn: async () => {
       if (!id) return undefined;
       try {
         console.log(`useSolicitacao: Buscando solicitação com ID: ${id}`);
@@ -42,8 +25,8 @@ export const useSolicitacao = (id?: string) => {
         throw err;
       }
     },
-    { enabled: !!id } // Só executa a query se o ID estiver disponível
-  );
+    enabled: !!id
+  });
 
   return { solicitacao, isLoading, error, refetch };
 }; 

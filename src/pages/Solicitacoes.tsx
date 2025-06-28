@@ -32,6 +32,8 @@ export const Solicitacoes = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingSolicitacao, setEditingSolicitacao] = useState<Solicitacao | null>(null);
 
+  const [isActionLoading, setIsActionLoading] = useState(false);
+
   console.log('Solicitacoes Component: loading', loading, 'error', error);
   console.log('Solicitacoes Component: loadingClientes', loadingClientes, 'errorClientes', errorClientes);
   console.log('Solicitacoes Component: loadingCategorias', loadingCategorias, 'errorCategorias', errorCategorias);

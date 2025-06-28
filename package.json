@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "start:all": "concurrently \"npm run dev\" \"npm run start --prefix api\"",
-    "build:all": "npm run build"
+    "build:all": "npm run build",
+    "vercel-build": "npm run build"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
