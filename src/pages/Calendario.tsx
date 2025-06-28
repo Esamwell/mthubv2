@@ -106,6 +106,14 @@ export const Calendario = () => {
     return dateA.getTime() - dateB.getTime();
   });
 
+  const isMobile = window.innerWidth < 640; // Define isMobile based on window width
+
+  // Lista de solicitações do mês atual para exibir no mobile
+  const solicitacoesDoMes = (eventos || []).filter(sol => {
+    const prazo = new Date(sol.data_prazo);
+    return prazo.getMonth() === currentDate.getMonth() && prazo.getFullYear() === currentDate.getFullYear();
+  });
+
   return (
     <Layout>
       {/* Header */}
@@ -223,7 +231,7 @@ export const Calendario = () => {
       <div className="bg-background rounded-lg border border-border p-6">
         <h2 className="text-xl font-semibold text-foreground mb-4">Solicitações em Lista</h2>
         {isLoading && <p className="text-muted-foreground">Carregando solicitações...</p>}
-        {error && <p className="text-destructive">Erro ao carregar solicitações: {error}</p>}
+        {error && <p className="text-destructive">Erro ao carregar solicitações: {error.message || String(error)}</p>}
         {!isLoading && !error && sortedDates.length === 0 && (
           <p className="text-muted-foreground">Nenhuma solicitação encontrada para este mês.</p>
         )}
@@ -251,6 +259,26 @@ export const Calendario = () => {
               ))}
             </div>
           )}
+        </div>
+      )}
+
+      {/* Mobile: cards empilhados para solicitações do mês */}
+      {isMobile && (
+        <div className="block sm:hidden p-4 space-y-4">
+          {solicitacoesDoMes.map((solicitacao) => (
+            <div key={solicitacao.id} className="rounded-lg border border-border p-4 flex flex-col gap-2 bg-white shadow-sm">
+              <div className="font-semibold text-lg text-foreground">{solicitacao.titulo}</div>
+              <div className="text-sm text-muted-foreground">{solicitacao.status}</div>
+              <div className="text-sm text-muted-foreground">Prazo: {solicitacao.data_prazo}</div>
+              {/* ...ações, se necessário... */}
+            </div>
+          ))}
+        </div>
+      )}
+      {/* Desktop: calendário tradicional */}
+      {!isMobile && (
+        <div className="hidden sm:block">
+          {/* ...componente de calendário tradicional... */}
         </div>
       )}
     </Layout>

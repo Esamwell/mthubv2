@@ -445,9 +445,21 @@ export const Solicitacoes = () => {
             </div>
           </div>
 
-          {/* Table of Solicitacoes */}
-          <div className="mt-6 overflow-x-auto">
-            <table className="min-w-full divide-y divide-border text-xs sm:text-sm">
+          {/* Mobile: cards empilhados */}
+          <div className="block sm:hidden p-4 space-y-4">
+            {solicitacoes.map((solicitacao) => (
+              <div key={solicitacao.id} className="rounded-lg border border-border p-4 flex flex-col gap-2 bg-white shadow-sm">
+                <div className="font-semibold text-lg text-foreground">{solicitacao.titulo}</div>
+                <div className="text-sm text-muted-foreground">{solicitacao.status}</div>
+                <div className="text-sm text-muted-foreground">Prazo: {solicitacao.data_prazo}</div>
+                {/* ...ações, se necessário... */}
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop: tabela */}
+          <div className="hidden sm:block mt-6 overflow-x-auto">
+            <table className="min-w-full divide-y divide-border text-sm">
               <thead>
                 <tr>
                   <th className="py-3 px-6 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider bg-muted rounded-tl-lg">TÍTULO</th>
