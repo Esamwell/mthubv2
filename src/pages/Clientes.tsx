@@ -51,22 +51,46 @@ export const Clientes = () => {
   const handleEditSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsActionLoading(true);
-    await fetch(`/api/usuarios`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        id: editData.id,
-        nome: editData.nome,
-        email: editData.email,
-        empresa: editData.empresa,
-        telefone: editData.telefone,
-        status: editData.status,
-        user_type: 'cliente',
-      }),
-    });
-    setIsActionLoading(false);
-    setEditDialogOpen(false);
-    refetch();
+    try {
+      const response = await fetch(`/api/usuarios`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: editData.id,
+          nome: editData.nome,
+          email: editData.email,
+          empresa: editData.empresa,
+          telefone: editData.telefone,
+          status: editData.status,
+          user_type: 'cliente',
+        }),
+      });
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        toast({
+          title: 'Erro ao editar cliente',
+          description: errorData.error || 'Erro desconhecido ao editar cliente.',
+          variant: 'destructive',
+        });
+        console.error('Erro ao editar cliente:', errorData);
+      } else {
+        toast({
+          title: 'Cliente atualizado!',
+          description: 'Os dados do cliente foram salvos com sucesso.',
+        });
+        setEditDialogOpen(false);
+        refetch();
+      }
+    } catch (error) {
+      toast({
+        title: 'Erro de conexão',
+        description: 'Não foi possível conectar ao servidor.',
+        variant: 'destructive',
+      });
+      console.error('Erro de conexão ao editar cliente:', error);
+    } finally {
+      setIsActionLoading(false);
+    }
   };
 
   const filteredClientes = clientes.filter(cliente =>
