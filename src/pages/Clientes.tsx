@@ -61,6 +61,7 @@ export const Clientes = () => {
         empresa: editData.empresa,
         telefone: editData.telefone,
         status: editData.status,
+        user_type: 'cliente',
       }),
     });
     setIsActionLoading(false);
